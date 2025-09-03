@@ -1,6 +1,6 @@
 package se.magnus.api.core.product;
 
-public record Product {
+public class Product {
   int productId;
   String name;
   int weight;
