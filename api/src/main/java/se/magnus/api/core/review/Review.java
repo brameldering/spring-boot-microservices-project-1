@@ -1,10 +1,10 @@
 package se.magnus.api.core.review;
 
-public record Review {
+public record Review (
   int productId,
   int reviewId,
   String author,
   String subject,
   String content,
-  String serviceAddress,
-}
+  String serviceAddress
+) {}

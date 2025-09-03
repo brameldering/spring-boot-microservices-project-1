@@ -1,10 +1,10 @@
 package se.magnus.api.core.recommendation;
 
-public record Recommendation {
+public record Recommendation (
   int productId,
   int recommendationId,
   String author,
   int rate,
   String content,
-  String serviceAddress,
-}
+  String serviceAddress
+  ) {}
