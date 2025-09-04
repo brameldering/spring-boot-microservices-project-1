@@ -6,7 +6,7 @@ plugins {
 
 group = 'se.magnus.microservices.composite.product'
 version = '1.0.0-SNAPSHOT'
-description = 'Demo project for Spring Boot'
+description = 'Composite Service'
 
 java {
 	toolchain {
@@ -19,13 +19,35 @@ repositories {
 }
 
 dependencies {
+    implementation project(':api')
+    implementation project(':util')
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'io.projectreactor:reactor-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // To avoid the following error message on Apple silicon (for details, see https://github.com/netty/netty/issues/11693):
+    // Unable to load io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS.
+    implementation group: 'io.netty', name: 'netty-resolver-dns-native-macos', classifier: 'osx-aarch_64'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+
+// This disables the default 'jar' task to prevent the creation of the non-executable *-plain.jar file.
+jar {
+    enabled = false
+}
+
+// This enables the Spring Boot 'bootJar' task. The main class is now configured in the springBoot block below.
+bootJar {
+}
+
+// The main class is now set in the dedicated springBoot extension block for newer Spring Boot versions.
+springBoot {
+    mainClass = 'se.magnus.microservices.composite.product.ProductCompositeServiceApplication'
 }

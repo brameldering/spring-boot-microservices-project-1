@@ -16,6 +16,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ServiceUtil serviceUtil;
 
+    // Only one constructor so Spring will automatically inject without the need for @Autowired
     public ProductServiceImpl(ServiceUtil serviceUtil) {
         this.serviceUtil = serviceUtil;
     }

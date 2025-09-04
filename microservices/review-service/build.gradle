@@ -6,7 +6,7 @@ plugins {
 
 group = 'se.magnus.microservices.core.review'
 version = '1.0.0-SNAPSHOT'
-description = 'Demo project for Spring Boot'
+description = 'Review Service'
 
 java {
 	toolchain {
@@ -16,10 +16,6 @@ java {
 
 repositories {
 	mavenCentral()
-}
-
-jar {
-    enabled = false
 }
 
 dependencies {
@@ -39,4 +35,18 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+// This disables the default 'jar' task to prevent the creation of the non-executable *-plain.jar file.
+jar {
+    enabled = false
+}
+
+// This enables the Spring Boot 'bootJar' task. The main class is now configured in the springBoot block below.
+bootJar {
+}
+
+// The main class is now set in the dedicated springBoot extension block for newer Spring Boot versions.
+springBoot {
+    mainClass = 'se.magnus.microservices.core.review.ReviewServiceApplication'
 }
